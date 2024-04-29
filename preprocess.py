@@ -61,7 +61,11 @@ def main():
         patient_id = args.annotation_path.split("s/", 1)[-1]
         annotations = XML_preprocessor(args.annotation_path, num_classes=num_classes).data
         for k, v in annotations.items():
-            dcm_path, dcm_name = main_dict[k[:-4]]
+            try:
+                dcm_path, dcm_name = main_dict[k[:-4]]
+            except:
+                print("Possible key error")    
+                continue
             # image_data = v
             dcm_to_csv(dcm_path, dcm_name, csv_path, patient_id[0])
 
