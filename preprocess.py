@@ -7,9 +7,7 @@ from get_data_from_XML import XML_preprocessor, get_category
 import pydicom
 import pandas as pd
 
-def dcm_to_csv(dcm_path, dcm_name, has_annotations, csv_path):
-    # We're assuming that if has_annotations = 1, then there 
-    # is cancer. If it's 0, then there's no cancer.
+def dcm_to_csv(dcm_path, dcm_name, csv_path, cancer_type):
     ds = pydicom.dcmread(dcm_path)
     pixel_array = ds.pixel_array
 
@@ -17,7 +15,7 @@ def dcm_to_csv(dcm_path, dcm_name, has_annotations, csv_path):
     flat_pixels = pixel_array.flatten()
     pixel_strings = " ".join(map(str, flat_pixels))
 
-    data_to_append = {'File Name': dcm_name, 'Pixel Data': pixel_strings, 'Has Annotations': has_annotations}
+    data_to_append = {'File Name': dcm_name, 'Pixel Data': pixel_strings, 'Cancer Type': cancer_type}
 
     # Check if CSV exists and append data
     if os.path.exists(csv_path):
@@ -46,20 +44,13 @@ def main():
     csv_path = 'output.csv'
 
     if os.path.isdir(args.annotation_path):
+        patient_id = args.annotation_path.split("s/", 1)[-1]
         annotations = XML_preprocessor(args.annotation_path, num_classes=num_classes).data
-        print(annotations.items())
         for k, v in annotations.items():
             dcm_path, dcm_name = main_dict[k[:-4]]
             # image_data = v
-            dcm_to_csv(dcm_path, dcm_name, 1, csv_path)
-
-            # if args.dicom_mode == 'CT':
-            #     matrix, frame_num, width, height, ch = loadFile(os.path.join(dcm_path))
-            #     print(dcm_path)
-            # elif args.dicom_mode == 'PET':
-            #     img_array, frame_num, width, height, ch = loadFile(dcm_path)
+            dcm_to_csv(dcm_path, dcm_name, csv_path, patient_id[0])
 
 
 if __name__ == '__main__':
-    #main("CT", "dl_data/images", "dl_data/annotations", "category.txt")
     main()

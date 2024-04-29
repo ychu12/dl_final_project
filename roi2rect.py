@@ -40,7 +40,7 @@ def roi2rect(img_name, img_np, img_data, label_list):
         pmax = (xmax, ymax)
 
         label_array = rect[4:]
-        index = int(np.where(label_array == np.float(1))[0])
+        index = int(np.where(label_array == float(1))[0])
         label = label_list[index]
 
         # color = tuple(map(int, np.uint8(np.random.uniform(0, 255, 3))))
