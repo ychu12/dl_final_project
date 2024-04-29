@@ -14,16 +14,26 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 import pydicom
 import pandas as pd
+import numpy as np
+from skimage.transform import resize
+
+def resize_image(pixel_array, target_size):
+    resized_image = resize(pixel_array, target_size, mode='constant', anti_aliasing=True, preserve_range=True)
+
+    return resized_image
 
 def dcm_to_csv(dcm_path, dcm_name, csv_path, cancer_type):
     ds = pydicom.dcmread(dcm_path)
     pixel_array = ds.pixel_array
 
+    # Raw target_size is (512,512)
+    pixel_array = resize_image(pixel_array, target_size=(256, 256))
+
     # Flatten the pixel array to 1D and convert to string format
     flat_pixels = pixel_array.flatten()
     pixel_strings = " ".join(map(str, flat_pixels))
 
-    data_to_append = {'File Name': dcm_name, 'Pixel Data': pixel_strings, 'Cancer Type': cancer_type}
+    data_to_append = {'file_name': dcm_name, 'pixel_data': pixel_strings, 'cancer_type': cancer_type}
 
     # Check if CSV exists and append data
     if os.path.exists(csv_path):
