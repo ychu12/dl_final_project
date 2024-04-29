@@ -4,6 +4,14 @@ from getUID import getUID_path, loadFile
 from get_gt import get_gt
 #from roi2rect import roi2rect, MatrixToImage, PETToImage
 from get_data_from_XML import XML_preprocessor, get_category
+
+
+# Some of the stencil code uses depricated code, but it is still needed
+# These two lines clean up the terminal outputs
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+
 import pydicom
 import pandas as pd
 
@@ -11,7 +19,7 @@ def dcm_to_csv(dcm_path, dcm_name, csv_path, cancer_type):
     ds = pydicom.dcmread(dcm_path)
     pixel_array = ds.pixel_array
 
-    # Flatten the array to 1D and convert to string format
+    # Flatten the pixel array to 1D and convert to string format
     flat_pixels = pixel_array.flatten()
     pixel_strings = " ".join(map(str, flat_pixels))
 
@@ -27,7 +35,7 @@ def dcm_to_csv(dcm_path, dcm_name, csv_path, cancer_type):
         df = pd.DataFrame([data_to_append])
         df.to_csv(csv_path, index=False)
 
-# Functions below from the stencil given by the site with the image data
+# Modified functions below from the stencil given by the site with the image data
 def parse_args():
     parser = argparse.ArgumentParser('Annotation Visualization')
     parser.add_argument('--dicom-mode', type=str, default='CT', choices=['CT', 'PET'])
@@ -40,7 +48,13 @@ def main():
     args = parse_args()
     class_list = get_category(args.classfile)
     num_classes = len(class_list)
-    main_dict = getUID_path(args.dicom_path)
+    try:
+        main_dict = getUID_path(args.dicom_path)
+        print("Folder/File Found")
+    except: 
+        # print("Probably FileNotFound error")
+        exit(1) # Kill the program, effectively breaking out of the loop.
+
     csv_path = 'output.csv'
 
     if os.path.isdir(args.annotation_path):
@@ -51,6 +65,5 @@ def main():
             # image_data = v
             dcm_to_csv(dcm_path, dcm_name, csv_path, patient_id[0])
 
-
-if __name__ == '__main__':
+if __name__ == '__main__': 
     main()
