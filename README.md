@@ -17,7 +17,7 @@ Other Notes:
 
 TODO:
 1. Use more data. Right now, the accuracy is 100%, which is kinda sus. It makes sense, however, because at the moment, only "A" labels are being used.
-^Update to the first TODO: Validation accuracy is super inconsistent. Idk why tbh.
+^Update to the first TODO: Validation accuracy now ~85% with image resizing to (128,128). Maybe run again to check if it's legit.
 2. Try out different architectures (such as an MLP).
 3. Make it so that in the preprocessing, "output.csv" is overwritten, so that I don't have to keep deleting it before every run.
 - Whatever else is in the handout/brief.
