@@ -21,7 +21,7 @@ Major things done so far:
 
 TODO:
 1. Use more data. Right now, the accuracy is 100%, which is kinda sus. It makes sense, however, because at the moment, only "A" labels are being used.
-^Update to the first TODO: Before, it would start at 100% accuracy. Now it gets there, but it's still kinda sus. We should use more image data and perhaps compress it (resize the images) during preprocessing to make the model faster.
+^Update to the first TODO: Before, it would start at 100% accuracy. Now it gets there, but it's still kinda sus. We should use more image data (more than 200mb), and perhaps compress it (resize the images) during preprocessing to make the model faster.
 2. Try out different architectures (such as an MLP).
 3. Whatever else is in the handout/brief.
 4. Make it so that in the preprocessing, "output.csv" is overwritten, so that I don't have to keep deleting it before every run.
