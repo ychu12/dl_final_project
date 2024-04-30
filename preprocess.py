@@ -27,7 +27,7 @@ def dcm_to_csv(dcm_path, dcm_name, csv_path, cancer_type):
     pixel_array = ds.pixel_array
 
     # Raw target_size is (512,512)
-    pixel_array = resize_image(pixel_array, target_size=(256, 256))
+    pixel_array = resize_image(pixel_array, target_size=(128, 128))
 
     # Flatten the pixel array to 1D and convert to string format
     flat_pixels = pixel_array.flatten()
