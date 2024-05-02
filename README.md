@@ -15,6 +15,7 @@ Other Notes:
 - Overall, the model actually predicts type of cancer from images, rather than if there is cancer in an image.
 - When the image target shape is (256,256) as opposed to the default (512,512) without reshaping/compressing the images, the model takes like 3-5 minutes to run and eventually reaches 100% training accuracy. When compressed to (128,128), it runs much faster, but only gets up to ~92% training accuracy, which is less sus imo.
 - MLP runs super quick, but the validation loss is super high.
+- I think if we could get the mlp to work well, then we could just say we tried the cnn but it kept overfitting
 
 TODO:
 1. Use more data. Right now, the accuracy is 100%, which is kinda sus. It makes sense, however, because at the moment, only "A" labels are being used.
