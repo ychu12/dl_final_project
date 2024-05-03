@@ -21,6 +21,7 @@ TODO:
 Some analysis:
 - The MLP model runs really quickly (5 seconds), and seems to have reasonable results after 20 epochs. The CNN model takes much longer to run, and seems to overfit, no matter what I try to do to fix it (BatchNorm, Dropout, L2 regularization, decreasing the learning rate and number of neurons/layers).
 - A stratified train/test split is used on the ~2.66 gigs of image data to ensure equal representation. The image sizes are resized from (512, 512) -> (128,128) to help with model performance (mainly for the CNN, the MLP is fine).
+- Preprocessing takes ~7.5 minutes to run with about 600mb of data, ~80 minutes without about 2.66gb of data. The results for 150mb and 600mb of data vary slightly, with the 600mb dataset having slightly more favorable results. The 2.66gb of data keeps erroring, which could be a result of faulty preprocessing.
 
 Max's questions (Yen's answers):
 1. We feel like the project has turned out well. We were able to attempt some stretch goals (trying out different architectures such as the CNN), and we reached our target and base goals (implementing a working MLP model).
